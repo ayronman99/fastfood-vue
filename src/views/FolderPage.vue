@@ -11,7 +11,7 @@
         <ion-title v-else-if="$route.params.subdir === 'order'">Our Foods</ion-title>
         <ion-title v-else>{{ $route.params.id }}</ion-title>
         <ion-avatar class="user-tb-avatar" slot="end">
-          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+          <ion-img alt="Silhouette of a person's head" :src="Momo ?? 'https://ionicframework.com/docs/img/demos/avatar.svg'" />
         </ion-avatar>
       </ion-toolbar>
     </ion-header>
@@ -36,10 +36,13 @@
 </template>
 
 <script setup lang="ts">
-import { IonAvatar, IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+
+import { IonImg, IonAvatar, IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 import PointsComp from '@/components/PointsComp.vue';
 import Home from '@/views/Home.vue';
 import FoodLists from '@/views/FoodLists.vue';
+import Momo from '@/imgs/user/momo.jpg'
+
 </script>
 
 <style scoped>
@@ -74,6 +77,5 @@ import FoodLists from '@/views/FoodLists.vue';
   margin-bottom: 0.5rem;
   margin-top: 0.5rem;
   margin-right: 0.5rem;
-  /* margin-right: 0.25rem; */
 }
 </style>

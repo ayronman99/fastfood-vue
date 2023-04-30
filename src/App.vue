@@ -5,9 +5,11 @@
         <ion-content>
           <ion-list id="inbox-list">
             <ion-avatar class="sp-user-avatar">
-              <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+              <ion-img alt="Silhouette of a person's head"
+                :src="Momo ?? 'https://ionicframework.com/docs/img/demos/avatar.svg'" />
+              <!-- <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" /> -->
             </ion-avatar>
-            <ion-list-header>Chou Tzuyu</ion-list-header>
+            <ion-list-header>Hirai Momo</ion-list-header>
             <ion-note>+63 912 345 6789</ion-note>
 
             <ion-menu-toggle :auto-hide="false" v-for="(p, i) in appPages" :key="i">
@@ -17,7 +19,7 @@
                 <ion-label>{{ p.title }}</ion-label>
               </ion-item>
             </ion-menu-toggle>
-          </ion-list>      
+          </ion-list>
         </ion-content>
       </ion-menu>
       <ion-router-outlet id="main-content"></ion-router-outlet>
@@ -41,6 +43,7 @@ import {
   IonNote,
   IonRouterOutlet,
   IonSplitPane,
+  IonImg
 } from '@ionic/vue';
 import {
   archiveOutline,
@@ -56,6 +59,7 @@ import {
   warningOutline,
   warningSharp,
 } from 'ionicons/icons';
+import Momo from '@/imgs/user/momo.jpg'
 
 const selectedIndex = ref(0);
 const appPages = [

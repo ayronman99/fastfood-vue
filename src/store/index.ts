@@ -1,5 +1,4 @@
 import { createStore } from 'vuex';
-import { ref } from 'vue';
 
 import tData from "../../data.json";
 type TDataType = {

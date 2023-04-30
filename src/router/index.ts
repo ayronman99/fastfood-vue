@@ -18,6 +18,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/order/:id',
     component: () => import('@/views/FoodPage.vue'),
+  },
+  {
+    path: '/order/summary',
+    component: () => import('@/views/OrderSummary.vue'),
   }
 ]
 

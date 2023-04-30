@@ -3,31 +3,37 @@
    
   </ion-popover> -->
   <ion-content>
-      <div class="flex flex-col items-center justify-center rounded-lg p-2 border-2 border-red-500">
-        <IonThumbnail>
-          <img :src="Success" alt="success" />
-        </IonThumbnail>
-        <ion-text>
-          <h2>Successfully Added!</h2>
-        </ion-text>
-        <ion-button>
-          Proceed to Checkout
-        </ion-button>
-        <ion-button fill="clear" @click="$router.push('/order')">
-          Add More
-        </ion-button>
-      </div>
-    </ion-content>
+    <div class="flex flex-col items-center justify-center rounded-lg p-2 border-2 border-red-500">
+      <IonThumbnail>
+        <img :src="Success" alt="success" />
+      </IonThumbnail>
+      <ion-text>
+        <h2>Successfully Added!</h2>
+      </ion-text>
+      <ion-button @click="$router.push('/order/summary')">
+        Proceed to Checkout
+      </ion-button>
+      <ion-button fill="clear" @click="$router.push('/order')">
+        Add More
+      </ion-button>
+    </div>
+  </ion-content>
 </template>
 
 
 <script setup lang="ts">
-import { IonText, IonContent, IonButton, IonPopover, IonThumbnail } from '@ionic/vue';
-import Success from "@/icons/success.svg"
-import { Router } from 'vue-router'
+import { IonText, IonContent, IonButton, IonThumbnail } from '@ionic/vue';
+import Success from "@/icons/success.svg";
+
 const prop = defineProps({
   triggerID: String
 })
+
+
+
+const proceedCheckout = () => {
+
+}
 </script>
 
 <style>
