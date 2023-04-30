@@ -5,7 +5,14 @@
         <ion-buttons slot="start">
           <ion-menu-button color="primary"></ion-menu-button>
         </ion-buttons>
-        <ion-title>{{ $route.params.id }}</ion-title>
+        <ion-title v-if="$route.params.subdir === 'home'">
+          <PointsComp />
+        </ion-title>
+        <ion-title v-else-if="$route.params.subdir === 'order'">Our Foods</ion-title>
+        <ion-title v-else>{{ $route.params.id }}</ion-title>
+        <ion-avatar class="user-tb-avatar" slot="end">
+          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </ion-avatar>
       </ion-toolbar>
     </ion-header>
 
@@ -13,19 +20,26 @@
       <ion-header collapse="condense">
         <ion-toolbar>
           <ion-title size="large">{{ $route.params.id }}</ion-title>
+
         </ion-toolbar>
       </ion-header>
 
+      <Home v-if="$route.params.subdir === 'home'" />
+      <FoodLists v-if="$route.params.subdir === 'order'" />
+
       <div id="container">
-        <strong class="capitalize">{{ $route.params.id }}</strong>
-        <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+
+        <strong class="capitalize">{{ $route.params }}</strong>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { IonAvatar, IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import PointsComp from '@/components/PointsComp.vue';
+import Home from '@/views/Home.vue';
+import FoodLists from '@/views/FoodLists.vue';
 </script>
 
 <style scoped>
@@ -52,5 +66,14 @@ import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, Io
 
 #container a {
   text-decoration: none;
+}
+
+.user-tb-avatar {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
+  /* margin-right: 0.25rem; */
 }
 </style>
