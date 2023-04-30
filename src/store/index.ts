@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-import { ref } from 'vue';
+import { handleError, ref } from 'vue';
 
 import tData from "../../data.json";
 type TDataType = {
@@ -7,23 +7,35 @@ type TDataType = {
     title: string;
     difficulty: string;
     image: string;
-    rating: number
+    rating: number;
+    price: Number
 }
 
-let tDataWRating: TDataType[] = []
+let foodData: TDataType[] = [];
+let priceArray: any = [];
 
-//{...tData, rating: (Math.random()  * 10).toFixed(2)}
+const fetchData = async () => {
+    const res = await fetch("https://fakerapi.it/api/v1/products?_quantity=50")
+        .then(res => res.json())
+        .then(data => data.data)
+        .catch(e => console.error(e))
+    return res;
+}
+
+priceArray.push(await fetchData());
 const tDataRater = () => {
-    for (let i = 0; i < tData.length; i++){
-        tDataWRating.push({...tData[i], rating: Number((Math.random() * 10).toFixed(2))})
+    for (let i = 0; i < 50; i++){
+        foodData.push({...tData[i], rating: Number((Math.random() * 10).toFixed(2)), price: priceArray[0][i]?.price})
     }
 }
+
 tDataRater();
+
 
 const store = createStore({
     state() {
         return {
-            foodData: tDataWRating
+            foodData
         }
     }
 })
