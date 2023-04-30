@@ -14,7 +14,7 @@
             <!--max-[635px]:w-[343px]
             -->
 
-            <div class="flex flex-col justify-center items-center p-9 border-2 border-yellow-900">
+            <div class="flex flex-col justify-center items-center border-2 border-yellow-900">
                 <div class="w-full border-2 border-red-900">
                     <div class="flex justify-center border-2 border-red-900">
                         <ion-img
@@ -59,32 +59,49 @@
                         <ion-list-header class="font-semibold text-lg">Add-Ons</ion-list-header>
                         <AddOnCard :price="14" :itemName="'YumBurjer'" />
                     </ion-list>
+                    <ion-button id="addtobag" expand="block" class="sticky bottom-0 z-10" @click="openPopover">
+                        Add To Bag
+                    </ion-button>
+                    
                 </div>
-            </div>
-            <ion-fab slot="fixed" horizontal="start" vertical="bottom">
-                <ion-fab-button class="w-[95vw] h-[50px]">
-                    Add to Bag
-                </ion-fab-button>
-            </ion-fab>
-        </ion-content>
 
+            </div>
+        </ion-content>
+        <!-- <ItemAdded triggerID="addtobag" /> -->
     </ion-page>
 </template>
 
 
 
 <script setup lang="ts">
-import { IonListHeader, IonImg, IonButtons, IonItem, IonContent, IonHeader, IonBackButton, IonTitle, IonToolbar, IonText, IonPage, IonList, IonSelect, IonSelectOption, IonRadioGroup, IonRadio, IonFab, IonFabButton } from '@ionic/vue';
+import { IonListHeader, IonImg, IonButtons, IonItem, IonContent, IonHeader, IonBackButton, IonTitle, IonToolbar, IonText, IonPage, IonList, IonSelect, IonSelectOption, IonRadioGroup, IonRadio, IonButton, popoverController } from '@ionic/vue';
 import { useRoute } from "vue-router";
 import { ref } from 'vue';
 import store from "@/store";
 import AddOnCard from '@/components/AddOnCard.vue';
+import ItemAdded from '@/components/ItemAdded.vue';
+
 const route = useRoute();
 const paramsId = route.params.id;
 const food = store.state.foodData.find(data => data.id === paramsId);
 
 const drinks = ref(["Coke", "Sprite", "Royal"]);
 const sizes = ref(["Regular", "Medium", "Large"]);
+
+const openPopover = async (ev: Event) => {
+        const popover = await popoverController.create({
+          component: ItemAdded,
+            event: ev,
+            size:"auto",
+            alignment: "center",
+            dismissOnSelect: true
+        });
+        await popover.present();
+}
+
+const addMore = () => {
+    
+}
 </script>
 
 
@@ -93,19 +110,14 @@ ion-img::part(image) {
     border-radius: 25px !important;
 }
 
-ion-fab-button::part(native) {
-    background-color: #D71921;
-    border-radius: 15px;
-    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, .3), 0px 1px 3px 1px rgba(0, 0, 0, .15);
-    color: #dedede;
+ion-button {
+    --background: #D71921;
+    --padding-top: 10px;
+    --padding-bottom: 10px;
 }
 
-ion-fab-button::part(native):hover {
-    background-color: #6b9456;
+ion-button:hover {
+    --background: #25c977;
     color: black;
-}
-
-ion-fab-button::part(native):active::after {
-    background-color: #87d361;
 }
 </style>

@@ -3,7 +3,7 @@
 
     <ion-grid>
         <ion-row>
-            <ion-col size="6" size-md="4" size-xl="2" v-for="food in store.state.foodData" :key="food.id">
+            <ion-col size="6" size-sm="4" size-md="4" size-xl="2" v-for="food in store.state.foodData" :key="food.id">
                 <ion-card class="h-[270px] w-[170px] sm:h-[275px] sm:w-auto" :router-link="`/order/${food.id}`">
                     <div class="h-2/4">
                         <ion-img class="object-cover h-full w-full" :alt="food.title" :src="food.image" />
