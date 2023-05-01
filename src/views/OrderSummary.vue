@@ -155,7 +155,7 @@
                             </p>
                         </ion-text>
                         <ion-button>Track Order</ion-button>
-                        <ion-button class="go-home" fill="clear" @click="placeOrder">Back To Home</ion-button>
+                        <ion-button class="go-home" fill="clear" :router-link="'/home'" @click="placeOrder">Back To Home</ion-button>
                     </div>
                 </ion-content>
             </ion-modal>
@@ -232,9 +232,8 @@ const netTotalHandler = () => {
 }
 
 const placeOrder = () => {
-    qty.value = 0
+    qty.value = 1
     setOpen.value = false
-    router.push({ path: '/home', replace: true })
 }
 
 onMounted(() => {
