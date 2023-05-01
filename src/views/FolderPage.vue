@@ -26,11 +26,7 @@
 
       <Home v-if="$route.params.subdir === 'home'" />
       <FoodLists v-if="$route.params.subdir === 'order'" />
-
-      <div id="container">
-
-        <strong class="capitalize">{{ $route.params }}</strong>
-      </div>
+      <PointsPage v-if="$route.params.subdir === 'points'" />
     </ion-content>
   </ion-page>
 </template>
@@ -41,6 +37,8 @@ import { IonImg, IonAvatar, IonButtons, IonContent, IonHeader, IonMenuButton, Io
 import PointsComp from '@/components/PointsComp.vue';
 import Home from '@/views/Home.vue';
 import FoodLists from '@/views/FoodLists.vue';
+import PointsPage from './PointsPage.vue';
+
 import Momo from '@/imgs/user/momo.jpg'
 
 </script>
