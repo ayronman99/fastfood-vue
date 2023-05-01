@@ -25,8 +25,9 @@
       </ion-header>
 
       <Home v-if="$route.params.subdir === 'home'" />
-      <FoodLists v-if="$route.params.subdir === 'order'" />
-      <PointsPage v-if="$route.params.subdir === 'points'" />
+      <FoodLists v-else-if="$route.params.subdir === 'order'" />
+      <PointsPage v-else-if="$route.params.subdir === 'points'" />
+      <ComingSoon v-else />
     </ion-content>
   </ion-page>
 </template>
@@ -38,6 +39,7 @@ import PointsComp from '@/components/PointsComp.vue';
 import Home from '@/views/Home.vue';
 import FoodLists from '@/views/FoodLists.vue';
 import PointsPage from './PointsPage.vue';
+import ComingSoon from './ComingSoon.vue';
 
 import Momo from '@/imgs/user/momo.jpg'
 
