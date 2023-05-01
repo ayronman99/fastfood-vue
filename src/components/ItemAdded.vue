@@ -3,7 +3,7 @@
    
   </ion-popover> -->
   <ion-content>
-    <div class="flex flex-col items-center justify-center rounded-lg p-2 border-2 border-red-500">
+    <div class="flex flex-col items-center justify-center rounded-lg p-2">
       <IonThumbnail>
         <img :src="Success" alt="success" />
       </IonThumbnail>

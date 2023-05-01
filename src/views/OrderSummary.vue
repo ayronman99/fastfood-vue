@@ -22,36 +22,36 @@
 
             <ion-list>
                 <ion-item>
+                    <ion-label></ion-label>
                     <ion-card class="w-full">
-                        <ion-label></ion-label>
                         <ion-card-header>
                             <ion-card-title class="font-bold">Home Address</ion-card-title>
                         </ion-card-header>
                         <ion-card-content class="flex justify-between">
-                            <div class="w-10/12">
+                            <div class="w-full">
                                 <span class="font-semibold">
                                     No. 21 St. Agustin Street, Brgy. De Jose, Delgado City 2234 Philippines
                                 </span>
                             </div>
-                            <ion-checkbox></ion-checkbox>
+                            <ion-checkbox aria-label="Label"></ion-checkbox>
                         </ion-card-content>
                     </ion-card>
                 </ion-item>
 
                 <ion-item>
+                    <ion-label></ion-label>
                     <ion-card class="w-full">
-                        <ion-label></ion-label>
                         <ion-card-header>
                             <ion-card-title class="font-bold">Work Address</ion-card-title>
                         </ion-card-header>
 
                         <ion-card-content class="flex justify-between">
-                            <div class="w-10/12">
+                            <div class="w-full">
                                 <span class="font-medium">
                                     3rd flr Anyeong Bldg. Seareal St., Joaqin City 3456 Philippines
                                 </span>
                             </div>
-                            <ion-checkbox></ion-checkbox>
+                            <ion-checkbox aria-label="Label"></ion-checkbox>
                         </ion-card-content>
                     </ion-card>
                 </ion-item>
@@ -140,7 +140,7 @@
                 </ion-button>
             </div>
 
-            <ion-modal :is-open="setOpen" :can-dismiss="canDismiss">
+            <ion-modal :is-open="setOpen">
                 <ion-content type="div">
                     <div class="flex flex-col h-full justify-center items-center p-10">
                         <img alt="order placed" :src="Success" />
@@ -155,10 +155,7 @@
                             </p>
                         </ion-text>
                         <ion-button>Track Order</ion-button>
-                        <ion-button class="go-home" fill="clear" @click="() => {
-                                $router.push('/home')
-                                setOpen = false
-                            }">Back To Home</ion-button>
+                        <ion-button class="go-home" fill="clear" @click="placeOrder">Back To Home</ion-button>
                     </div>
                 </ion-content>
             </ion-modal>
@@ -178,6 +175,7 @@ import Paynamics from '@/imgs/payments/paynamics.png';
 import Paymaya from '@/imgs/payments/maya2.png';
 /*Icons Import */
 import Success from "@/icons/success.svg";
+import router from '@/router';
 
 
 const setOpen = ref(false)
@@ -231,6 +229,12 @@ const subTotalHandler = () => {
 }
 const netTotalHandler = () => {
     return netTotal.value = subTotal.value + delFee.value;
+}
+
+const placeOrder = () => {
+    qty.value = 0
+    setOpen.value = false
+    router.push({ path: '/home', replace: true })
 }
 
 onMounted(() => {
