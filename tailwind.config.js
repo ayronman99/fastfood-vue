@@ -5,7 +5,15 @@ export default {
     "./src/**/*.{vue,js,ts,jsx,tsx}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      zIndex: {
+        "5": "5",
+        "15": "15",
+        "25": "25",
+        "35": "35",
+        "45": "45",
+      },
+    },
   },
   plugins: [],
 }

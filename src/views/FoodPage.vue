@@ -62,7 +62,7 @@
                     <ion-button id="addtobag" expand="block" class="sticky bottom-0 z-10" @click="openPopover">
                         Add To Bag
                     </ion-button>
-                    
+
                 </div>
 
             </div>
@@ -89,18 +89,14 @@ const drinks = ref(["Coke", "Sprite", "Royal"]);
 const sizes = ref(["Regular", "Medium", "Large"]);
 
 const openPopover = async (ev: Event) => {
-        const popover = await popoverController.create({
-          component: ItemAdded,
-            event: ev,
-            size:"auto",
-            alignment: "center",
-            dismissOnSelect: true
-        });
-        await popover.present();
-}
-
-const addMore = () => {
-    
+    const popover = await popoverController.create({
+        component: ItemAdded,
+        event: ev,
+        size: "auto",
+        alignment: "center",
+        dismissOnSelect: true
+    });
+    await popover.present();
 }
 </script>
 
