@@ -10,11 +10,11 @@
             </ion-avatar>
             <ion-list-header>Hirai Momo</ion-list-header>
             <ion-note>+63 912 345 6789</ion-note>
-            <ion-button class="hidden lg:inline-block" :router-link="'/points'" menuClose>
+            <ion-button class="hidden lg:inline-block" :router-link="'/points'">
               0 Points
             </ion-button>
             <ion-menu-toggle>
-              <ion-button :router-link="'/points'" menuClose>
+              <ion-button :router-link="'/points'">
                 0 Points
               </ion-button>
             </ion-menu-toggle>

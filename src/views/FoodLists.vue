@@ -1,9 +1,10 @@
 <template>
-    <ion-searchbar class="sticky top-0 z-5" placeholder="craving for some kimbap, eel and bread?"></ion-searchbar>
+    <ion-searchbar class="sticky top-0 z-5" :value="searchVal" @input="event => searchVal = event.target.value"
+        placeholder="craving for some kimbap, eel and bread?" :animated="true"></ion-searchbar>
 
     <ion-grid>
         <ion-row>
-            <ion-col size="6" size-sm="4" size-md="4" size-xl="2" v-for="food in store.state.foodData" :key="food.id">
+            <ion-col size="6" size-sm="4" size-md="4" size-xl="2" v-for="food in filteredStore" :key="food.id">
                 <ion-card class="h-[270px] w-[170px] sm:h-[275px] sm:w-auto" :router-link="`/order/${food.id}`">
                     <div class="h-2/4">
                         <ion-img class="object-cover h-full w-full" :alt="food.title" :src="food.image" />
@@ -31,4 +32,12 @@
 <script setup lang="ts">
 import { IonSearchbar, IonGrid, IonRow, IonCol, IonCard, IonCardTitle, IonCardHeader, IonCardSubtitle, IonImg } from "@ionic/vue"
 import store from "@/store";
+import { ref, computed } from "vue";
+
+const searchVal = ref("");
+const ogStore = store.state.foodData;
+const filteredStore = computed(() => ogStore.filter(items => items.title.toLocaleLowerCase().includes(searchVal.value.toLocaleLowerCase())))
+
+
+
 </script>
