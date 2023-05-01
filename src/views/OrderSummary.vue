@@ -119,7 +119,7 @@
                 </ion-button>
             </div>
 
-            <ion-modal :is-open="setOpen" :dismissOnSelect="true">
+            <ion-modal :is-open="setOpen" :can-dismiss="canDismiss">
                 <ion-content type="div">
                     <div class="flex flex-col h-full justify-center items-center p-24">
                         <img alt="order placed" :src="Success" />
@@ -136,6 +136,7 @@
                         <ion-button>Track Order</ion-button>
                         <ion-button class="go-home" fill="clear" @click="() => {
                             $router.push('/home')
+                            canDismiss = true
                             setOpen = false
                         }">Back To Home</ion-button>
                     </div>
