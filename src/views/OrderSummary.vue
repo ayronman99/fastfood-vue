@@ -27,11 +27,10 @@
                         <ion-card-header>
                             <ion-card-title class="font-bold">Home Address</ion-card-title>
                         </ion-card-header>
-                        <!-- class="border-2 border-green-500" -->
                         <ion-card-content class="flex justify-between">
-                            <div>
+                            <div class="w-10/12">
                                 <span class="font-semibold">
-                                    No. 21 St. Agustin Street, Brgy. De Jose Delgado City 2234 Philippines
+                                    No. 21 St. Agustin Street, Brgy. De Jose, Delgado City 2234 Philippines
                                 </span>
                             </div>
                             <ion-checkbox></ion-checkbox>
@@ -47,9 +46,9 @@
                         </ion-card-header>
 
                         <ion-card-content class="flex justify-between">
-                            <div>
+                            <div class="w-10/12">
                                 <span class="font-medium">
-                                    3rd flr Anyeong Bldg. Seareal St. Joaqin City 3456 Philippines
+                                    3rd flr Anyeong Bldg. Seareal St., Joaqin City 3456 Philippines
                                 </span>
                             </div>
                             <ion-checkbox></ion-checkbox>
@@ -67,12 +66,34 @@
                 <ion-item>
                     <ion-card class="w-full">
                         <ion-card-header>
-                            <ion-card-title>Item Name</ion-card-title>
+
                             <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
                         </ion-card-header>
 
                         <ion-card-content>
-                            Order data here
+                            <ion-card-title>Steak Fries Veggies</ion-card-title>
+                            <ion-list class="flex flex-col">
+                                <ion-note>1x Tomato Sauce</ion-note>
+                                <ion-note>1x Regular Coke</ion-note>
+                                <ion-note>1x Fried Chicken</ion-note>
+                            </ion-list>
+                            <ion-list class="flex justify-between items-center">
+                                <div>
+                                    <ion-text>
+                                        <span class="text-2xl text-[#D71921] font-extrabold"><span>&#8369;{{ price
+                                        }}</span>&nbsp;
+                                        </span>
+                                    </ion-text>
+                                </div>
+                                <div class="flex items-center">
+                                    <ion-button class="z-5 font-extrabold" color="danger"
+                                        @click.stop="increase">+</ion-button>
+                                    <span class="p-2 text-2xl font-bold">{{ qty }}</span>
+                                    <ion-button class="z-5 font-extrabold" color="danger"
+                                        @click.stop="decrease">-</ion-button>
+                                </div>
+                            </ion-list>
+
                         </ion-card-content>
                     </ion-card>
                 </ion-item>
@@ -104,16 +125,16 @@
             <ion-item>
                 <div class="w-full">
                     <ion-text class="flex justify-between items-center">
-                        <h4>Subtotal</h4> <span>&#8369; 300</span>
+                        <h4>Subtotal</h4> <span>&#8369; {{ subTotal }}</span>
                     </ion-text>
                     <ion-text class="flex justify-between items-center">
-                        <h4>Delivery Charge</h4> <span>&#8369; 10</span>
+                        <h4>Delivery Charge</h4> <span>&#8369; {{ delFee }}</span>
                     </ion-text>
                 </div>
             </ion-item>
 
             <div class="sticky bottom-0 w-full flex justify-between items-center p-2 bg-slate-700 rounded-sm z-5">
-                <p>Total: &#8369; 500</p>
+                <p>Total: &#8369; {{ subTotal === 0 ? 0 : netTotal }}</p>
                 <ion-button @click="modalHandler">
                     Place Order
                 </ion-button>
@@ -121,7 +142,7 @@
 
             <ion-modal :is-open="setOpen" :can-dismiss="canDismiss">
                 <ion-content type="div">
-                    <div class="flex flex-col h-full justify-center items-center p-24">
+                    <div class="flex flex-col h-full justify-center items-center p-10">
                         <img alt="order placed" :src="Success" />
                         <ion-text>
                             <h2 class="font-semibold text-3xl">Order Received!</h2>
@@ -135,10 +156,9 @@
                         </ion-text>
                         <ion-button>Track Order</ion-button>
                         <ion-button class="go-home" fill="clear" @click="() => {
-                            $router.push('/home')
-                            canDismiss = true
-                            setOpen = false
-                        }">Back To Home</ion-button>
+                                $router.push('/home')
+                                setOpen = false
+                            }">Back To Home</ion-button>
                     </div>
                 </ion-content>
             </ion-modal>
@@ -147,10 +167,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 /*Ionic Components Import */
-import { IonButtons, IonContent, IonHeader, IonBackButton, IonTitle, IonToolbar, IonPage, IonNote, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonList, IonListHeader, IonItem, IonLabel, IonRadio, IonRadioGroup, IonText, IonButton, IonModal } from '@ionic/vue';
+import { IonButtons, IonContent, IonHeader, IonBackButton, IonTitle, IonToolbar, IonPage, IonNote, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonList, IonListHeader, IonItem, IonLabel, IonRadio, IonRadioGroup, IonText, IonButton, IonModal, IonCheckbox } from '@ionic/vue';
 
 /* Images import  */
 import Paypal from '@/imgs/payments/paypal.png';
@@ -188,6 +208,38 @@ const paymentMethods = [
         img: Paymaya
     },
 ]
+
+const qty = ref(1);
+const price = ref(185);
+const subTotal = ref(0);
+const netTotal = ref(0);
+const delFee = ref(10);
+
+const increase = () => {
+    if (qty.value >= 0) {
+        qty.value++
+    }
+}
+const decrease = () => {
+    if (qty.value > 0) {
+        qty.value--
+    }
+}
+
+const subTotalHandler = () => {
+    return subTotal.value = qty.value * price.value;
+}
+const netTotalHandler = () => {
+    return netTotal.value = subTotal.value + delFee.value;
+}
+
+onMounted(() => {
+    subTotalHandler()
+    netTotalHandler()
+})
+
+watch(qty, subTotalHandler);
+watch(subTotal, netTotalHandler);
 </script>
 
 
@@ -197,7 +249,8 @@ ion-button {
     --padding-top: 10px;
     --padding-bottom: 10px;
 }
-ion-button.go-home{
+
+ion-button.go-home {
     --background: transparent;
 }
 </style>

@@ -11,12 +11,10 @@
                     </ion-title>
                 </ion-toolbar>
             </ion-header>
-            <!--max-[635px]:w-[343px]
-            -->
 
-            <div class="flex flex-col justify-center items-center border-2 border-yellow-900">
-                <div class="w-full border-2 border-red-900">
-                    <div class="flex justify-center border-2 border-red-900">
+            <div class="flex flex-col justify-center items-center">
+                <div class="w-full">
+                    <div class="flex justify-center">
                         <ion-img
                             class="w-9/12 max-[635px]:h-[350px] min-[640px]:w-[600px] min-[640px]:h-[550px] object-cover rounded-lg "
                             :alt="food?.title" :src="food?.image" />
@@ -33,27 +31,34 @@
                         </ion-text>
 
                         <div class="flex justify-between items-center pt-2">
-                            <p><span>&#8369;</span>&nbsp; 172</p>
-                            <div><span>+</span>1<span>-</span></div>
+                            <p class="text-2xl text-[#D71921] font-bold"><span>&#8369;</span>&nbsp; {{food?.price}}</p>
+                            <div class="flex items-center">
+                                <ion-button class="z-5 font-extrabold" color="danger" @click.stop="increase">+</ion-button>
+                                <span class="p-2 text-2xl font-bold">{{qty}}</span>
+                                <ion-button class="z-5 font-extrabold" color="danger" @click.stop="decrease">-</ion-button>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="px-2 border-2 border-l-zinc-950">
+                    <div class="px-2">
                         <ion-text>
                             <h3 class="font-semibold text-lg">Beverages</h3>
                         </ion-text>
 
-                        <ion-item class="border-2 border-emerald-500 rounded-lg">
+                        <ion-item class="rounded-lg">
                             <ion-select aria-label="fruit" placeholder="Select a Drink">
                                 <ion-select-option v-for="drink in drinks" :value="drink">{{ drink
                                 }}</ion-select-option>
                             </ion-select>
                         </ion-item>
-                        <!-- <ion-list > </ion-list> -->
                     </div>
-                    <ion-radio-group value="strawberries" class="flex justify-evenly">
-                        <ion-radio v-for="size in sizes" :value="size">{{ size }}</ion-radio>
-                    </ion-radio-group>
+
+                    <div class="flex justify-evenly p-2 my-3">
+                        <div class="radio-handler" v-for="size in sizes" :key="size">
+                            <input class="reward-radio" type="radio" :value="size" name="drinkSize" :id="size" />
+                            <label class="lbl-btn-radio font-bold text-lg" :for="size">{{ size }}</label>
+                        </div>
+                    </div>
 
                     <ion-list class="mb-5">
                         <ion-list-header class="font-semibold text-lg">Add-Ons</ion-list-header>
@@ -62,12 +67,9 @@
                     <ion-button id="addtobag" expand="block" class="sticky bottom-0 z-10" @click="openPopover">
                         Add To Bag
                     </ion-button>
-
                 </div>
-
             </div>
         </ion-content>
-        <!-- <ItemAdded triggerID="addtobag" /> -->
     </ion-page>
 </template>
 
@@ -98,6 +100,19 @@ const openPopover = async (ev: Event) => {
     });
     await popover.present();
 }
+
+const qty = ref(0);
+
+const increase = () => {
+    if (qty.value >= 0) {
+        qty.value++
+    }
+}
+const decrease = () => {
+    if (qty.value > 0) {
+        qty.value--
+    }
+}
 </script>
 
 
@@ -114,6 +129,23 @@ ion-button {
 
 ion-button:hover {
     --background: #25c977;
-    color: black;
+    color: black;    
 }
+.reward-radio {
+    display: none;
+}
+
+.lbl-btn-radio {
+    padding: 10px;
+    background-color: antiquewhite;
+    border-radius: 20px;
+    color: #010101;
+    cursor: pointer;
+}
+
+.reward-radio:checked+.lbl-btn-radio {
+    background-color: rgb(217, 127, 10);
+    color: #d8c6c6;
+}
+
 </style>

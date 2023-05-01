@@ -7,11 +7,17 @@
             <ion-avatar class="sp-user-avatar">
               <ion-img alt="Silhouette of a person's head"
                 :src="Momo ?? 'https://ionicframework.com/docs/img/demos/avatar.svg'" />
-              <!-- <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" /> -->
             </ion-avatar>
             <ion-list-header>Hirai Momo</ion-list-header>
             <ion-note>+63 912 345 6789</ion-note>
-
+            <ion-button class="hidden lg:inline-block" :router-link="'/points'" menuClose>
+              0 Points
+            </ion-button>
+            <ion-menu-toggle>
+              <ion-button :router-link="'/points'" menuClose>
+                0 Points
+              </ion-button>
+            </ion-menu-toggle>
             <ion-menu-toggle :auto-hide="false" v-for="(p, i) in appPages" :key="i">
               <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none"
                 :detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
@@ -20,6 +26,19 @@
               </ion-item>
             </ion-menu-toggle>
           </ion-list>
+          <ion-list id="labels-list">
+            <ion-item v-for="label in otherOpts" lines="none" :key="label.title">
+              <ion-icon aria-hidden="true" slot="start" :ios="label.iosIcon" :md="label.mdIcon"></ion-icon>
+              <ion-label>{{ label.title }}</ion-label>
+            </ion-item>
+          </ion-list>
+          <ion-fab slot="fixed" horizontal="start" vertical="bottom">
+            <ion-menu-toggle>
+              <ion-button expand="block" color="danger" v-on:click="logOut">
+                Logout
+              </ion-button>
+            </ion-menu-toggle>
+          </ion-fab>
         </ion-content>
       </ion-menu>
       <ion-router-outlet id="main-content"></ion-router-outlet>
@@ -28,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import {
   IonAvatar,
   IonApp,
@@ -43,62 +62,89 @@ import {
   IonNote,
   IonRouterOutlet,
   IonSplitPane,
-  IonImg
+  IonImg,
+  IonFab,
+  IonButton
 } from '@ionic/vue';
 import {
-  archiveOutline,
-  archiveSharp,
-  heartOutline,
-  heartSharp,
-  mailOutline,
-  mailSharp,
-  paperPlaneOutline,
-  paperPlaneSharp,
-  trashOutline,
-  trashSharp,
-  warningOutline,
-  warningSharp,
+  personOutline,
+  locationOutline,
+  timerOutline,
+  helpOutline,
+  reorderFourOutline,
+  notificationsOutline,
+  storefrontOutline,
+  fastFoodOutline,
+  fastFoodSharp,
+  notificationsSharp,
+  storefrontSharp,
+  helpSharp,
+  reorderFourSharp,
+  locationSharp,
+  timerSharp,
+  personSharp,
 } from 'ionicons/icons';
 import Momo from '@/imgs/user/momo.jpg'
-
+import FoodApp from '@/icons/FoodApp.svg'
 const selectedIndex = ref(0);
 const appPages = [
   {
     title: 'Home',
     url: '/home',
-    iosIcon: mailOutline,
-    mdIcon: mailSharp,
+    iosIcon: FoodApp,
+    mdIcon: FoodApp,
   },
   {
     title: 'Order Now!',
     url: '/order',
-    iosIcon: paperPlaneOutline,
-    mdIcon: paperPlaneSharp,
+    iosIcon: fastFoodOutline,
+    mdIcon: fastFoodSharp,
   },
   {
-    title: 'Favorites',
-    url: '/folder/Favorites',
-    iosIcon: heartOutline,
-    mdIcon: heartSharp,
+    title: 'Notifications',
+    url: '/folder/notifications',
+    iosIcon: notificationsOutline,
+    mdIcon: notificationsSharp,
   },
   {
-    title: 'Archived',
-    url: '/folder/Archived',
-    iosIcon: archiveOutline,
-    mdIcon: archiveSharp,
+    title: 'Store Locator',
+    url: '/folder/store',
+    iosIcon: storefrontOutline,
+    mdIcon: storefrontSharp,
   },
   {
-    title: 'Trash',
-    url: '/folder/Trash',
-    iosIcon: trashOutline,
-    mdIcon: trashSharp,
+    title: 'FAQ\'s',
+    url: '/folder/faqs',
+    iosIcon: helpOutline,
+    mdIcon: helpSharp,
+  }
+];
+const otherOpts = [
+  {
+    title: 'My Orders',
+    iosIcon: reorderFourOutline,
+    mdIcon: reorderFourSharp,
   },
   {
-    title: 'Spam',
-    url: '/folder/Spam',
-    iosIcon: warningOutline,
-    mdIcon: warningSharp,
+    title: 'My Account',
+    iosIcon: personOutline,
+    mdIcon: personSharp,
   },
+  {
+    title: 'My Favorites',
+    iosIcon: notificationsOutline,
+    mdIcon: notificationsSharp,
+  },
+  {
+    title: 'Order Tracker',
+    iosIcon: locationOutline,
+    mdIcon: locationSharp,
+  },
+  {
+    title: 'Order History',
+    iosIcon: timerOutline,
+    mdIcon: timerSharp,
+  }
 ];
 
 const path = window.location.pathname.split('folder/')[1];
@@ -106,7 +152,9 @@ if (path !== undefined) {
   selectedIndex.value = appPages.findIndex((page) => page.title.toLowerCase() === path.toLowerCase());
 }
 
-
+const logOut = () => {
+  alert("Successfully logged out!")
+}
 </script>
 
 <style scoped>

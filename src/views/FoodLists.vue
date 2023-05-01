@@ -1,5 +1,5 @@
 <template>
-    <ion-searchbar placeholder="craving for some kimbap, eel and bread?"></ion-searchbar>
+    <ion-searchbar class="sticky top-0 z-5" placeholder="craving for some kimbap, eel and bread?"></ion-searchbar>
 
     <ion-grid>
         <ion-row>
@@ -10,9 +10,15 @@
                     </div>
 
                     <ion-card-header class="h-2/5">
-                        <ion-card-title  class="h-4/5 border-2 border-cyan-500">{{ food.title }}</ion-card-title>
+                        <ion-card-title class="h-4/5">
+                            <p
+                                class="text-ellipsis overflow-hidden h-[60px] hover:relative hover:overflow-visible hover:h-auto hover:bg-[#1c1c1d] hover:rounded-md hover:z-5 hover:px-1">
+                                {{ food.title
+                                }}
+                            </p>
+                        </ion-card-title>
                         <ion-card-subtitle>
-                            <p>{{ `Price: ${food.price} ` }}</p>
+                            <p class="text-clip">{{ `Price: ${food.price} ` }}</p>
                             <p>{{ `Rating: ${food.rating}` }}</p>
                         </ion-card-subtitle>
                     </ion-card-header>
